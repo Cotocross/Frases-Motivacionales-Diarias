@@ -1,0 +1,20 @@
+{
+  "name": "daily-motivation-backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p scripts/tsconfig.json",
+    "generate-phrase": "ts-node scripts/generateDailyPhrase.ts",
+    "scheduler": "ts-node scripts/scheduler.ts",
+    "test-generation": "npm run generate-phrase"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "latest",
+    "dotenv": "^17.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  }
+}

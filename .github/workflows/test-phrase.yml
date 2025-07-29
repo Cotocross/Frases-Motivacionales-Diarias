@@ -1,0 +1,49 @@
+name: Test Generación de Frase
+
+on:
+  workflow_dispatch: # Solo ejecución manual
+
+jobs:
+  test-phrase:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+      
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Instalar pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: latest
+        
+    - name: Instalar dependencias
+      run: |
+        cd backend
+        pnpm install
+        
+    - name: Configurar variables de entorno
+      run: |
+        cd backend
+        echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.SUPABASE_URL }}" > .env.local
+        echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env.local
+        
+    - name: Verificar conexión
+      run: |
+        cd backend
+        npx ts-node scripts/test-env.ts
+        
+    - name: Generar frase de prueba
+      run: |
+        cd backend
+        pnpm run generate-phrase
+        
+    - name: Resultado del test
+      if: always()
+      run: |
+        echo "🧪 Test completado - $(date)"
+        echo "📊 Revisa los logs anteriores para ver el resultado" 
