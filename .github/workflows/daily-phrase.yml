@@ -1,60 +1,44 @@
-name: Generar Frase Motivacional Diaria
+name: Generación Diaria de Frase
 
 on:
   schedule:
-    # Ejecutar todos los días a las 00:00 UTC (8:00 PM hora de Chile)
-    - cron: '0 0 * * *'
-  workflow_dispatch: # Permite ejecución manual
+    - cron: '0 0 * * *' # Ejecutar todos los días a las 00:00 UTC
+  workflow_dispatch: # También permite ejecución manual
 
 jobs:
-  generate-phrase:
+  generate-daily-phrase:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout código
       uses: actions/checkout@v4
-      
+
     - name: Configurar Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        
+
     - name: Instalar pnpm
       uses: pnpm/action-setup@v2
       with:
         version: latest
-        
-    - name: Obtener pnpm store directory
-      shell: bash
-      run: |
-        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-        
-    - name: Configurar pnpm cache
-      uses: actions/cache@v3
-      with:
-        path: ${{ env.STORE_PATH }}
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-store-
-          
+
     - name: Instalar dependencias
       run: |
         cd backend
         pnpm install
-        
-    - name: Configurar variables de entorno
-      run: |
-        cd backend
-        echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.SUPABASE_URL }}" > .env.local
-        echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env.local
-        
-    - name: Generar frase motivacional
+
+    - name: Generar frase diaria
+      env:
+        SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+        SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
+        SUPABASE_SERVICE_ROLE_KEY: ${{ vars.SUPABASE_SERVICE_ROLE_KEY }}
       run: |
         cd backend
         pnpm run generate-phrase
-        
-    - name: Notificar resultado
+
+    - name: Resultado
       if: always()
       run: |
-        echo "✅ Workflow completado - $(date)"
-        echo "📅 Fecha de ejecución: $(date '+%Y-%m-%d %H:%M:%S UTC')" 
+        echo "🎯 Frase diaria generada - $(date)"
+        echo "📋 Revisa los logs anteriores para ver el resultado" 
