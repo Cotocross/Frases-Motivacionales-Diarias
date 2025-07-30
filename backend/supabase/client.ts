@@ -5,8 +5,12 @@ import { createClient } from '@supabase/supabase-js'
  * During development, we use placeholder values if environment variables are not set
  * IMPORTANT: Replace these values with your actual Supabase project credentials in .env.local
  */
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://your-project.supabase.co'
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'your-anon-key'
+const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://your-project.supabase.co'
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'your-anon-key'
+
+// Debug log
+console.log('Supabase URL:', supabaseUrl)
+console.log('Using default URL:', supabaseUrl === 'https://your-project.supabase.co')
 
 /**
  * Initialize Supabase client with configuration
