@@ -10,67 +10,87 @@ interface Phrase {
 }
 
 /**
- * Genera una frase motivacional usando IA
- * Por ahora usaremos frases predefinidas, pero puedes integrar con OpenAI, Claude, etc.
+ * Genera una frase motivacional usando OpenAI
  */
 async function generateMotivationalPhrase(): Promise<{ content: string; author: string; category: string }> {
-  // Array de frases motivacionales predefinidas
-  const motivationalPhrases = [
-    {
-      content: "El éxito no es final, el fracaso no es fatal: lo que cuenta es el coraje para continuar.",
-      author: "Winston Churchill",
-      category: "perseverancia"
-    },
-    {
-      content: "La vida es lo que pasa mientras estás ocupado haciendo otros planes.",
-      author: "John Lennon",
-      category: "vida"
-    },
-    {
-      content: "No hay ascensor al éxito, tienes que tomar las escaleras.",
-      author: "Zig Ziglar",
-      category: "esfuerzo"
-    },
-    {
-      content: "El futuro pertenece a quienes creen en la belleza de sus sueños.",
-      author: "Eleanor Roosevelt",
-      category: "sueños"
-    },
-    {
-      content: "La única forma de hacer un gran trabajo es amar lo que haces.",
-      author: "Steve Jobs",
-      category: "pasión"
-    },
-    {
-      content: "No cuentes los días, haz que los días cuenten.",
-      author: "Muhammad Ali",
-      category: "productividad"
-    },
-    {
-      content: "La vida es 10% lo que te pasa y 90% cómo reaccionas a ello.",
-      author: "Charles R. Swindoll",
-      category: "actitud"
-    },
-    {
+  const openaiApiKey = process.env.OPENAI_API_KEY
+  
+  if (!openaiApiKey) {
+    console.log('⚠️ OpenAI API key no configurada, usando frase predefinida')
+    // Fallback a frase predefinida si no hay API key
+    return {
       content: "Cada amanecer trae nuevas esperanzas y nuevas oportunidades.",
       author: "Anónimo",
       category: "esperanza"
-    },
-    {
-      content: "El éxito es la suma de pequeños esfuerzos repetidos día tras día.",
-      author: "Robert Collier",
-      category: "constancia"
-    },
-    {
-      content: "Los sueños no tienen fecha de caducidad.",
-      author: "Anónimo",
-      category: "sueños"
     }
-  ]
+  }
 
-  // Seleccionar una frase aleatoria
-  const randomIndex = Math.floor(Math.random() * motivationalPhrases.length)
-  return motivationalPhrases[randomIndex]
+  try {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${openaiApiKey}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'system',
+            content: 'Eres un experto en motivación y frases inspiradoras. Genera frases motivacionales únicas y originales.'
+          },
+          {
+            role: 'user',
+            content: `Genera una frase motivacional única y original en español. 
+            Responde SOLO con un JSON en este formato exacto:
+            {
+              "content": "La frase motivacional aquí",
+              "author": "Nombre del autor (puede ser 'Anónimo' si no conoces el autor)",
+              "category": "Una categoría como: motivación, éxito, perseverancia, sueños, vida, trabajo, actitud, esperanza, constancia, pasión"
+            }
+            
+            La frase debe ser inspiradora, positiva y motivacional.`
+          }
+        ],
+        temperature: 0.8,
+        max_tokens: 200
+      })
+    })
+
+    if (!response.ok) {
+      throw new Error(`OpenAI API error: ${response.status}`)
+    }
+
+    const data = await response.json() as any
+    const content = data.choices[0].message.content
+    
+    // Intentar parsear el JSON de la respuesta
+    try {
+      const parsed = JSON.parse(content)
+      return {
+        content: parsed.content,
+        author: parsed.author,
+        category: parsed.category
+      }
+    } catch (parseError) {
+      console.error('Error parseando respuesta de OpenAI:', parseError)
+      // Fallback si no se puede parsear
+      return {
+        content: "Cada amanecer trae nuevas esperanzas y nuevas oportunidades.",
+        author: "Anónimo",
+        category: "esperanza"
+      }
+    }
+
+  } catch (error) {
+    console.error('Error generando frase con OpenAI:', error)
+    // Fallback a frase predefinida en caso de error
+    return {
+      content: "Cada amanecer trae nuevas esperanzas y nuevas oportunidades.",
+      author: "Anónimo",
+      category: "esperanza"
+    }
+  }
 }
 
 /**

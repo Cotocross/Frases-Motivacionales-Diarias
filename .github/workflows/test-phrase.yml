@@ -31,6 +31,7 @@ jobs:
         SUPABASE_URL: ${{ vars.SUPABASE_URL }}
         SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
         SUPABASE_SERVICE_ROLE_KEY: ${{ vars.SUPABASE_SERVICE_ROLE_KEY }}
+        OPENAI_API_KEY: ${{ vars.OPENAI_API_KEY }}
       run: |
         cd backend
         npx ts-node scripts/test-env.ts
@@ -40,6 +41,7 @@ jobs:
         SUPABASE_URL: ${{ vars.SUPABASE_URL }}
         SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
         SUPABASE_SERVICE_ROLE_KEY: ${{ vars.SUPABASE_SERVICE_ROLE_KEY }}
+        OPENAI_API_KEY: ${{ vars.OPENAI_API_KEY }}
       run: |
         cd backend
         pnpm run generate-phrase
