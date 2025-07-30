@@ -1,6 +1,5 @@
-import * as dotenv from 'dotenv'
-dotenv.config({ path: '.env.local' })
-
+// En GitHub Actions, las variables de entorno ya están disponibles
+// No necesitamos cargar .env.local
 console.log('🔍 Verificando variables de entorno...')
 console.log('SUPABASE_URL:', process.env.SUPABASE_URL ? '✅ Configurada' : '❌ No configurada')
 console.log('SUPABASE_ANON_KEY:', process.env.SUPABASE_ANON_KEY ? '✅ Configurada' : '❌ No configurada')

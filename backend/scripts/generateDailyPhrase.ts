@@ -1,5 +1,5 @@
-import * as dotenv from 'dotenv'
-dotenv.config({ path: '.env.local' })
+// En GitHub Actions, las variables de entorno ya están disponibles
+// No necesitamos cargar .env.local
 import { supabase } from '../supabase/client'
 
 interface Phrase {
