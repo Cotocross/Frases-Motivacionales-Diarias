@@ -12,16 +12,17 @@ interface Phrase {
 /**
  * Genera una frase motivacional usando OpenAI
  */
-async function generateMotivationalPhrase(): Promise<{ content: string; author: string; category: string }> {
+async function generateMotivationalPhrase(): Promise<{ content: string; author: string; category: string; isAI: boolean }> {
   const openaiApiKey = process.env.OPENAI_API_KEY
-  
+
   if (!openaiApiKey) {
     console.log('⚠️ OpenAI API key no configurada, usando frase predefinida')
     // Fallback a frase predefinida si no hay API key
     return {
       content: "Cada amanecer trae nuevas esperanzas y nuevas oportunidades.",
       author: "Anónimo",
-      category: "esperanza"
+      category: "esperanza",
+      isAI: false
     }
   }
 
@@ -67,28 +68,34 @@ async function generateMotivationalPhrase(): Promise<{ content: string; author: 
     // Intentar parsear el JSON de la respuesta
     try {
       const parsed = JSON.parse(content)
+      console.log('🤖 Frase generada exitosamente por IA')
       return {
         content: parsed.content,
         author: parsed.author,
-        category: parsed.category
+        category: parsed.category,
+        isAI: true
       }
     } catch (parseError) {
       console.error('Error parseando respuesta de OpenAI:', parseError)
+      console.log('⚠️ Usando frase predefinida por error de parsing')
       // Fallback si no se puede parsear
       return {
         content: "Cada amanecer trae nuevas esperanzas y nuevas oportunidades.",
         author: "Anónimo",
-        category: "esperanza"
+        category: "esperanza",
+        isAI: false
       }
     }
 
   } catch (error) {
     console.error('Error generando frase con OpenAI:', error)
+    console.log('⚠️ Usando frase predefinida por error de API')
     // Fallback a frase predefinida en caso de error
     return {
       content: "Cada amanecer trae nuevas esperanzas y nuevas oportunidades.",
       author: "Anónimo",
-      category: "esperanza"
+      category: "esperanza",
+      isAI: false
     }
   }
 }
@@ -128,7 +135,7 @@ async function checkIfPhraseExists(date: string): Promise<boolean> {
 /**
  * Inserta una nueva frase en la base de datos
  */
-async function insertPhrase(phrase: { content: string; author: string; category: string }, date: string): Promise<boolean> {
+async function insertPhrase(phrase: { content: string; author: string; category: string; isAI: boolean }, date: string): Promise<boolean> {
   try {
     const { data, error } = await supabase
       .from('phrases')
@@ -146,11 +153,12 @@ async function insertPhrase(phrase: { content: string; author: string; category:
       return false
     }
 
-    console.log('✅ Frase insertada exitosamente:', {
-      content: data.content,
-      author: data.author,
-      date: data.created_at
-    })
+                    console.log('✅ Frase insertada exitosamente:', {
+                  content: data.content,
+                  author: data.author,
+                  date: data.created_at,
+                  isAI: phrase.isAI ? '🤖 Generada por IA' : '📝 Frase predefinida'
+                })
     return true
   } catch (error) {
     console.error('Error insertando frase:', error)
@@ -175,9 +183,16 @@ export async function generateDailyPhrase(): Promise<void> {
       return
     }
     
-    // Generar nueva frase
-    console.log('🤖 Generando frase motivacional...')
-    const newPhrase = await generateMotivationalPhrase()
+                    // Generar nueva frase
+                console.log('🤖 Generando frase motivacional...')
+                const newPhrase = await generateMotivationalPhrase()
+                
+                // Mostrar el tipo de frase generada
+                if (newPhrase.isAI) {
+                  console.log('🎯 Frase generada por IA')
+                } else {
+                  console.log('📝 Usando frase predefinida')
+                }
     
     // Insertar en la base de datos
     console.log('💾 Insertando frase en la base de datos...')
