@@ -1,14 +1,32 @@
 {
-  "name": "daily-motivation-root",
-  "version": "1.0.0",
-  "private": true,
+  // ============================================================================
+  // CONFIGURACIÓN PRINCIPAL DEL MONOREPO
+  // ============================================================================
+  // Este archivo define la configuración raíz del proyecto "daily-motivation"
+  // Implementa un monorepo con pnpm workspaces para gestionar frontend y backend
+  
+  "name": "daily-motivation-root", // Nombre del proyecto raíz
+  "version": "1.0.0", // Versión del proyecto
+  "private": true, // Evita publicación accidental a npm
+  
+  // ============================================================================
+  // WORKSPACES - Configuración del monorepo
+  // ============================================================================
+  // Define los subproyectos que componen el monorepo
+  // pnpm gestionará las dependencias de forma independiente para cada workspace
   "workspaces": [
-    "frontend",
-    "backend"
+    "frontend", // Aplicación Next.js (interfaz de usuario)
+    "backend"   // Scripts de automatización y modelos de datos
   ],
+  
+  // ============================================================================
+  // SCRIPTS - Comandos disponibles desde la raíz
+  // ============================================================================
+  // Estos scripts permiten ejecutar comandos en workspaces específicos
+  // desde la raíz del proyecto usando pnpm --filter
   "scripts": {
-    "dev": "pnpm --filter frontend dev",
-    "build": "pnpm --filter frontend build",
-    "start": "pnpm --filter frontend start"
+    "dev": "pnpm --filter frontend dev",     // Inicia el servidor de desarrollo del frontend
+    "build": "pnpm --filter frontend build", // Construye la aplicación para producción
+    "start": "pnpm --filter frontend start"  // Inicia el servidor de producción del frontend
   }
 } 

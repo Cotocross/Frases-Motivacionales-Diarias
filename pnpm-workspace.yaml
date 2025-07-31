@@ -1,3 +1,15 @@
+# ============================================================================
+# CONFIGURACIÓN DE WORKSPACES DE PNPM
+# ============================================================================
+# Este archivo define la estructura de workspaces para el monorepo
+# pnpm utiliza esta configuración para gestionar múltiples paquetes en un solo repositorio
+# 
+# Beneficios de usar workspaces:
+# - Gestión independiente de dependencias por proyecto
+# - Instalación optimizada de paquetes
+# - Posibilidad de ejecutar comandos específicos por workspace
+# - Compartir dependencias comunes eficientemente
+
 packages:
-  - 'frontend'
-  - 'backend'
+  - 'frontend'  # Aplicación Next.js - Interfaz de usuario y páginas web
+  - 'backend'   # Scripts de automatización - Generación de frases y modelos de datos

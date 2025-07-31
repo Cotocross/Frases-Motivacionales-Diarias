@@ -1,72 +1,116 @@
 {
-  "name": "@daily-motivation/frontend",
-  "version": "0.1.0",
-  "private": true,
+  // ============================================================================
+  // CONFIGURACIÓN DEL FRONTEND - Aplicación Next.js
+  // ============================================================================
+  // Este archivo define la configuración del workspace frontend
+  // Contiene todas las dependencias necesarias para la aplicación web
+  
+  "name": "@daily-motivation/frontend", // Nombre del workspace frontend
+  "version": "0.1.0", // Versión del frontend
+  "private": true, // Evita publicación accidental a npm
+  
+  // ============================================================================
+  // SCRIPTS - Comandos de desarrollo y producción
+  // ============================================================================
+  // Scripts específicos para el frontend Next.js
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "next dev",     // Inicia servidor de desarrollo con hot reload
+    "build": "next build", // Construye la aplicación optimizada para producción
+    "start": "next start", // Inicia servidor de producción
+    "lint": "next lint"    // Ejecuta el linter para verificar código
   },
+  
+  // ============================================================================
+  // DEPENDENCIAS DE PRODUCCIÓN
+  // ============================================================================
+  // Librerías necesarias para el funcionamiento de la aplicación
   "dependencies": {
-    "@hookform/resolvers": "^3.9.1",
-    "@radix-ui/react-accordion": "1.2.2",
-    "@radix-ui/react-alert-dialog": "1.1.4",
-    "@radix-ui/react-aspect-ratio": "1.1.1",
-    "@radix-ui/react-avatar": "1.1.2",
-    "@radix-ui/react-checkbox": "1.1.3",
-    "@radix-ui/react-collapsible": "1.1.2",
-    "@radix-ui/react-context-menu": "2.2.4",
-    "@radix-ui/react-dialog": "1.1.4",
-    "@radix-ui/react-dropdown-menu": "2.1.4",
-    "@radix-ui/react-hover-card": "1.1.4",
-    "@radix-ui/react-label": "2.1.1",
-    "@radix-ui/react-menubar": "1.1.4",
-    "@radix-ui/react-navigation-menu": "1.2.3",
-    "@radix-ui/react-popover": "1.1.4",
-    "@radix-ui/react-progress": "1.1.1",
-    "@radix-ui/react-radio-group": "1.2.2",
-    "@radix-ui/react-scroll-area": "1.2.2",
-    "@radix-ui/react-select": "2.1.4",
-    "@radix-ui/react-separator": "1.1.1",
-    "@radix-ui/react-slider": "1.2.2",
-    "@radix-ui/react-slot": "1.1.1",
-    "@radix-ui/react-switch": "1.1.2",
-    "@radix-ui/react-tabs": "1.1.2",
-    "@radix-ui/react-toast": "1.2.4",
-    "@radix-ui/react-toggle": "1.1.1",
-    "@radix-ui/react-toggle-group": "1.1.1",
-    "@radix-ui/react-tooltip": "1.1.6",
-    "@supabase/ssr": "latest",
-    "@supabase/supabase-js": "latest",
-    "autoprefixer": "^10.4.20",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "cmdk": "1.0.4",
-    "date-fns": "4.1.0",
-    "embla-carousel-react": "8.5.1",
-    "geist": "^1.3.1",
-    "input-otp": "1.4.1",
-    "lucide-react": "^0.454.0",
-    "next": "14",
-    "next-themes": "^0.4.4",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-hook-form": "^7.54.1",
-    "react-resizable-panels": "^2.1.7",
-    "recharts": "2.15.0",
-    "sonner": "^1.7.1",
-    "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7",
-    "vaul": "^0.9.6",
-    "zod": "^3.24.1"
+    // ============================================================================
+    // COMPONENTES UI - Radix UI (accesibles y personalizables)
+    // ============================================================================
+    "@hookform/resolvers": "^3.9.1",           // Resolvers para react-hook-form
+    "@radix-ui/react-accordion": "1.2.2",      // Componente acordeón
+    "@radix-ui/react-alert-dialog": "1.1.4",   // Diálogos de alerta
+    "@radix-ui/react-aspect-ratio": "1.1.1",   // Control de proporción de aspecto
+    "@radix-ui/react-avatar": "1.1.2",         // Componente de avatar
+    "@radix-ui/react-checkbox": "1.1.3",       // Checkbox personalizable
+    "@radix-ui/react-collapsible": "1.1.2",    // Contenido colapsable
+    "@radix-ui/react-context-menu": "2.2.4",   // Menú contextual
+    "@radix-ui/react-dialog": "1.1.4",         // Diálogos modales
+    "@radix-ui/react-dropdown-menu": "2.1.4",  // Menú desplegable
+    "@radix-ui/react-hover-card": "1.1.4",     // Tarjeta con hover
+    "@radix-ui/react-label": "2.1.1",          // Etiquetas de formulario
+    "@radix-ui/react-menubar": "1.1.4",        // Barra de menú
+    "@radix-ui/react-navigation-menu": "1.2.3", // Menú de navegación
+    "@radix-ui/react-popover": "1.1.4",        // Popover/tooltip
+    "@radix-ui/react-progress": "1.1.1",       // Barra de progreso
+    "@radix-ui/react-radio-group": "1.2.2",    // Grupo de radio buttons
+    "@radix-ui/react-scroll-area": "1.2.2",    // Área con scroll personalizado
+    "@radix-ui/react-select": "2.1.4",         // Selector desplegable
+    "@radix-ui/react-separator": "1.1.1",      // Separador visual
+    "@radix-ui/react-slider": "1.2.2",         // Slider/control deslizante
+    "@radix-ui/react-slot": "1.1.1",           // Slot para composición de componentes
+    "@radix-ui/react-switch": "1.1.2",         // Switch/toggle
+    "@radix-ui/react-tabs": "1.1.2",           // Pestañas
+    "@radix-ui/react-toast": "1.2.4",          // Notificaciones toast
+    "@radix-ui/react-toggle": "1.1.1",         // Botón toggle
+    "@radix-ui/react-toggle-group": "1.1.1",   // Grupo de toggles
+    "@radix-ui/react-tooltip": "1.1.6",        // Tooltips
+    
+    // ============================================================================
+    // BASE DE DATOS - Supabase
+    // ============================================================================
+    "@supabase/ssr": "latest",                 // Supabase para Server-Side Rendering
+    "@supabase/supabase-js": "latest",         // Cliente de Supabase para JavaScript
+    
+    // ============================================================================
+    // ESTILOS Y CSS
+    // ============================================================================
+    "autoprefixer": "^10.4.20",                // Autoprefixer para CSS
+    "class-variance-authority": "^0.7.1",      // Utilidad para variantes de componentes
+    "clsx": "^2.1.1",                          // Utilidad para combinar clases CSS
+    "tailwind-merge": "^2.5.5",                // Merge de clases Tailwind
+    "tailwindcss-animate": "^1.0.7",           // Animaciones para Tailwind
+    
+    // ============================================================================
+    // COMPONENTES ADICIONALES
+    // ============================================================================
+    "cmdk": "1.0.4",                           // Comando palette (⌘K)
+    "date-fns": "4.1.0",                       // Utilidades para manejo de fechas
+    "embla-carousel-react": "8.5.1",           // Carousel/slider
+    "geist": "^1.3.1",                         // Fuente Geist
+    "input-otp": "1.4.1",                      // Input para códigos OTP
+    "lucide-react": "^0.454.0",                // Iconos SVG
+    "react-hook-form": "^7.54.1",              // Manejo de formularios
+    "react-resizable-panels": "^2.1.7",        // Paneles redimensionables
+    "recharts": "2.15.0",                      // Gráficos y visualizaciones
+    "sonner": "^1.7.1",                        // Notificaciones toast modernas
+    "vaul": "^0.9.6",                          // Drawer/sidebar deslizante
+    
+    // ============================================================================
+    // FRAMEWORK PRINCIPAL - Next.js y React
+    // ============================================================================
+    "next": "14",                              // Framework de React para producción
+    "next-themes": "^0.4.4",                   // Soporte para temas claro/oscuro
+    "react": "^18",                            // Biblioteca de UI
+    "react-dom": "^18",                        // Renderizado de React en el DOM
+    
+    // ============================================================================
+    // VALIDACIÓN Y TIPOS
+    // ============================================================================
+    "zod": "^3.24.1"                           // Validación de esquemas TypeScript
   },
+  
+  // ============================================================================
+  // DEPENDENCIAS DE DESARROLLO
+  // ============================================================================
+  // Librerías necesarias solo durante el desarrollo
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "@types/node": "^20",                      // Tipos TypeScript para Node.js
+    "@types/react": "^18",                     // Tipos TypeScript para React
+    "@types/react-dom": "^18",                 // Tipos TypeScript para React DOM
+    "postcss": "^8",                           // Procesador CSS
+    "tailwindcss": "^3.4.1",                   // Framework CSS utility-first
+    "typescript": "^5"                         // Compilador de TypeScript
   }
 }

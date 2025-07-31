@@ -1,21 +1,42 @@
 {
-  "name": "daily-motivation-backend",
-  "version": "1.0.0",
-  "private": true,
+  // ============================================================================
+  // CONFIGURACIÓN DEL BACKEND - Scripts de automatización
+  // ============================================================================
+  // Este archivo define la configuración del workspace backend
+  // Contiene scripts para automatización y generación de frases motivacionales
+  
+  "name": "daily-motivation-backend", // Nombre del workspace backend
+  "version": "1.0.0", // Versión del backend
+  "private": true, // Evita publicación accidental a npm
+  
+  // ============================================================================
+  // SCRIPTS - Comandos de automatización y testing
+  // ============================================================================
+  // Scripts específicos para el backend de automatización
   "scripts": {
-    "build": "tsc -p scripts/tsconfig.json",
-    "generate-phrase": "ts-node scripts/generateDailyPhrase.ts",
-    "scheduler": "ts-node scripts/scheduler.ts",
-    "test-generation": "npm run generate-phrase",
-    "test-gemini": "ts-node scripts/test-gemini.ts"
+    "build": "tsc -p scripts/tsconfig.json",           // Compila TypeScript a JavaScript
+    "generate-phrase": "ts-node scripts/generateDailyPhrase.ts", // Genera frase diaria usando IA
+    "scheduler": "ts-node scripts/scheduler.ts",        // Programador de tareas (futuro)
+    "test-generation": "npm run generate-phrase",       // Alias para testing de generación
+    "test-gemini": "ts-node scripts/test-gemini.ts"    // Test de conexión con Gemini API
   },
+  
+  // ============================================================================
+  // DEPENDENCIAS DE PRODUCCIÓN
+  // ============================================================================
+  // Librerías necesarias para el funcionamiento de los scripts
   "dependencies": {
-    "@supabase/supabase-js": "latest",
-    "dotenv": "^17.2.1"
+    "@supabase/supabase-js": "latest", // Cliente de Supabase para operaciones de base de datos
+    "dotenv": "^17.2.1"                // Carga variables de entorno desde archivos .env
   },
+  
+  // ============================================================================
+  // DEPENDENCIAS DE DESARROLLO
+  // ============================================================================
+  // Librerías necesarias solo durante el desarrollo
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "ts-node": "^10.9.0",
-    "typescript": "^5.0.0"
+    "@types/node": "^20.0.0",  // Tipos TypeScript para Node.js
+    "ts-node": "^10.9.0",      // Ejecuta archivos TypeScript directamente
+    "typescript": "^5.0.0"     // Compilador de TypeScript
   }
 }

@@ -1,45 +1,100 @@
+# ============================================================================
+# WORKFLOW: Generación Diaria de Frase Motivacional
+# ============================================================================
+# Este workflow se ejecuta automáticamente todos los días para generar
+# una nueva frase motivacional usando Google Gemini API y la inserta
+# en la base de datos de Supabase para el día siguiente
+# 
+# Funcionalidad:
+# - Ejecución automática diaria a las 00:00 UTC
+# - Ejecución manual desde GitHub Actions
+# - Generación de frases usando IA o fallback predefinido
+# - Inserción automática en base de datos Supabase
+
 name: Generación Diaria de Frase
 
+# ============================================================================
+# TRIGGERS - Cuándo se ejecuta el workflow
+# ============================================================================
 on:
+  # Ejecución programada automática
   schedule:
     - cron: '0 0 * * *' # Ejecutar todos los días a las 00:00 UTC
-  workflow_dispatch: # También permite ejecución manual
+      # Formato cron: minuto hora día mes día_semana
+      # 0 0 * * * = todos los días a medianoche
+  
+  # Ejecución manual desde la interfaz de GitHub Actions
+  workflow_dispatch: # Permite ejecutar el workflow manualmente
 
+# ============================================================================
+# JOBS - Tareas a ejecutar
+# ============================================================================
 jobs:
+  # Job principal para generar la frase diaria
   generate-daily-phrase:
+    # Ejecutar en el último Ubuntu disponible
     runs-on: ubuntu-latest
 
+    # ============================================================================
+    # STEPS - Pasos secuenciales del workflow
+    # ============================================================================
     steps:
+    # ============================================================================
+    # PASO 1: Checkout del código
+    # ============================================================================
     - name: Checkout código
       uses: actions/checkout@v4
+      # Descarga el código del repositorio al runner
 
+    # ============================================================================
+    # PASO 2: Configurar Node.js
+    # ============================================================================
     - name: Configurar Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '20' # Usar Node.js versión 20 LTS
+        # Node.js es necesario para ejecutar los scripts TypeScript
 
+    # ============================================================================
+    # PASO 3: Instalar pnpm
+    # ============================================================================
     - name: Instalar pnpm
       uses: pnpm/action-setup@v2
       with:
-        version: latest
+        version: latest # Usar la última versión de pnpm
+        # pnpm es el gestor de paquetes usado en este proyecto
 
+    # ============================================================================
+    # PASO 4: Instalar dependencias del backend
+    # ============================================================================
     - name: Instalar dependencias
       run: |
         cd backend
         pnpm install
+        # Instala todas las dependencias necesarias para los scripts
 
+    # ============================================================================
+    # PASO 5: Generar frase diaria
+    # ============================================================================
     - name: Generar frase diaria
+      # Variables de entorno necesarias para el script
       env:
-        SUPABASE_URL: ${{ vars.SUPABASE_URL }}
-        SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
-        SUPABASE_SERVICE_ROLE_KEY: ${{ vars.SUPABASE_SERVICE_ROLE_KEY }}
-        GEMINI_API_KEY: ${{ vars.GEMINI_API_KEY }}
+        SUPABASE_URL: ${{ vars.SUPABASE_URL }}                    # URL de Supabase
+        SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}          # Clave anónima de Supabase
+        SUPABASE_SERVICE_ROLE_KEY: ${{ vars.SUPABASE_SERVICE_ROLE_KEY }} # Clave de servicio
+        GEMINI_API_KEY: ${{ vars.GEMINI_API_KEY }}               # Clave API de Google Gemini
+        # Nota: Se usan 'vars' en lugar de 'secrets' para variables no sensibles
       run: |
         cd backend
         pnpm run generate-phrase
+        # Ejecuta el script que genera e inserta la frase del día siguiente
 
+    # ============================================================================
+    # PASO 6: Mostrar resultado
+    # ============================================================================
     - name: Resultado
-      if: always()
+      if: always() # Se ejecuta siempre, incluso si hay errores
       run: |
         echo "🎯 Frase diaria generada - $(date)"
-        echo "📋 Revisa los logs anteriores para ver el resultado" 
+        echo "📋 Revisa los logs anteriores para ver el resultado"
+        # Muestra un mensaje de confirmación con la fecha 
