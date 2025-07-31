@@ -10,13 +10,13 @@ interface Phrase {
 }
 
 /**
- * Genera una frase motivacional usando OpenAI
+ * Genera una frase motivacional usando Google Gemini API
  */
 async function generateMotivationalPhrase(): Promise<{ content: string; author: string; category: string; isAI: boolean }> {
-  const openaiApiKey = process.env.OPENAI_API_KEY
+  const geminiApiKey = process.env.GEMINI_API_KEY
 
-  if (!openaiApiKey) {
-    console.log('⚠️ OpenAI API key no configurada, usando frase predefinida')
+  if (!geminiApiKey) {
+    console.log('⚠️ Gemini API key no configurada, usando frase predefinida')
     // Fallback a frase predefinida si no hay API key
     return {
       content: "Cada amanecer trae nuevas esperanzas y nuevas oportunidades.",
@@ -27,22 +27,15 @@ async function generateMotivationalPhrase(): Promise<{ content: string; author: 
   }
 
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${geminiApiKey}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${openaiApiKey}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
-        messages: [
-          {
-            role: 'system',
-            content: 'Eres un experto en motivación y frases inspiradoras. Genera frases motivacionales únicas y originales.'
-          },
-          {
-            role: 'user',
-            content: `Genera una frase motivacional única y original en español. 
+        contents: [{
+          parts: [{
+            text: `Genera una frase motivacional única y original en español. 
             Responde SOLO con un JSON en este formato exacto:
             {
               "content": "La frase motivacional aquí",
@@ -51,24 +44,26 @@ async function generateMotivationalPhrase(): Promise<{ content: string; author: 
             }
             
             La frase debe ser inspiradora, positiva y motivacional.`
-          }
-        ],
-        temperature: 0.8,
-        max_tokens: 200
+          }]
+        }],
+        generationConfig: {
+          temperature: 0.8,
+          maxOutputTokens: 200
+        }
       })
     })
 
     if (!response.ok) {
-      throw new Error(`OpenAI API error: ${response.status}`)
+      throw new Error(`Gemini API error: ${response.status}`)
     }
 
     const data = await response.json() as any
-    const content = data.choices[0].message.content
+    const content = data.candidates[0].content.parts[0].text
     
     // Intentar parsear el JSON de la respuesta
     try {
       const parsed = JSON.parse(content)
-      console.log('🤖 Frase generada exitosamente por IA')
+      console.log('🤖 Frase generada exitosamente por IA (Gemini)')
       return {
         content: parsed.content,
         author: parsed.author,
@@ -76,7 +71,7 @@ async function generateMotivationalPhrase(): Promise<{ content: string; author: 
         isAI: true
       }
     } catch (parseError) {
-      console.error('Error parseando respuesta de OpenAI:', parseError)
+      console.error('Error parseando respuesta de Gemini:', parseError)
       console.log('⚠️ Usando frase predefinida por error de parsing')
       // Fallback si no se puede parsear
       return {
@@ -88,7 +83,7 @@ async function generateMotivationalPhrase(): Promise<{ content: string; author: 
     }
 
   } catch (error) {
-    console.error('Error generando frase con OpenAI:', error)
+    console.error('Error generando frase con Gemini:', error)
     console.log('⚠️ Usando frase predefinida por error de API')
     // Fallback a frase predefinida en caso de error
     return {
