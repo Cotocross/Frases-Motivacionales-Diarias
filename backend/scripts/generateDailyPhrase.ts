@@ -62,7 +62,16 @@ async function generateMotivationalPhrase(): Promise<{ content: string; author: 
     
     // Intentar parsear el JSON de la respuesta
     try {
-      const parsed = JSON.parse(content)
+      // Limpiar la respuesta de markdown si viene con ```json
+      let cleanContent = content.trim()
+      if (cleanContent.startsWith('```json')) {
+        cleanContent = cleanContent.replace(/^```json\s*/, '').replace(/\s*```$/, '')
+      }
+      if (cleanContent.startsWith('```')) {
+        cleanContent = cleanContent.replace(/^```\s*/, '').replace(/\s*```$/, '')
+      }
+      
+      const parsed = JSON.parse(cleanContent)
       console.log('🤖 Frase generada exitosamente por IA (Gemini)')
       return {
         content: parsed.content,
