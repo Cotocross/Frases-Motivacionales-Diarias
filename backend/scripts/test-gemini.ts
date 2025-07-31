@@ -35,11 +35,11 @@ async function testGeminiConnection() {
     console.log('Status:', response1.status)
     console.log('Status Text:', response1.statusText)
     
-    if (response1.ok) {
-      const data = await response1.json()
-      console.log('✅ URL v1 funciona correctamente')
-      console.log('Respuesta:', JSON.stringify(data, null, 2))
-    } else {
+         if (response1.ok) {
+       const data = await response1.json() as any
+       console.log('✅ URL v1 funciona correctamente')
+       console.log('Respuesta:', JSON.stringify(data, null, 2))
+     } else {
       console.log('❌ URL v1 falló')
     }
   } catch (error) {
@@ -66,11 +66,11 @@ async function testGeminiConnection() {
     console.log('Status:', response2.status)
     console.log('Status Text:', response2.statusText)
     
-    if (response2.ok) {
-      const data = await response2.json()
-      console.log('✅ URL v1beta funciona correctamente')
-      console.log('Respuesta:', JSON.stringify(data, null, 2))
-    } else {
+         if (response2.ok) {
+       const data = await response2.json() as any
+       console.log('✅ URL v1beta funciona correctamente')
+       console.log('Respuesta:', JSON.stringify(data, null, 2))
+     } else {
       console.log('❌ URL v1beta falló')
     }
   } catch (error) {
@@ -85,11 +85,11 @@ async function testGeminiConnection() {
     console.log('Status:', response3.status)
     console.log('Status Text:', response3.statusText)
     
-    if (response3.ok) {
-      const data = await response3.json()
-      console.log('✅ API key válida')
-      console.log('Modelos disponibles:', data.models?.map((m: any) => m.name) || 'No disponible')
-    } else {
+         if (response3.ok) {
+       const data = await response3.json() as any
+       console.log('✅ API key válida')
+       console.log('Modelos disponibles:', data.models?.map((m: any) => m.name) || 'No disponible')
+     } else {
       console.log('❌ API key inválida o problema de autenticación')
     }
   } catch (error) {
