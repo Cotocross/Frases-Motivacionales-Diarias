@@ -106,23 +106,52 @@ export default function DailyMotivation() {
     setIsAnimating(true)
     console.log('Obteniendo nueva frase...')
     
-    // Calculamos la fecha anterior
-    if (currentMessage.created_at) {
-      const currentDate = new Date(currentMessage.created_at + 'T12:00:00')
-      currentDate.setDate(currentDate.getDate() - 1)
-      const previousDate = currentDate.toISOString().split('T')[0]
+    try {
+      // Primero intentamos obtener una frase aleatoria de la base de datos
+      const { data, error } = await supabase
+        .from('phrases')
+        .select('content, author, created_at')
+        .order('created_at', { ascending: false })
+        .limit(10)
       
-      console.log('Buscando frase para fecha anterior:', previousDate)
-      const newMessage = await getMessageFromDB(previousDate)
-      console.log('Nueva frase obtenida:', newMessage)
+      if (error) {
+        console.error('Error obteniendo frases:', error)
+        setIsAnimating(false)
+        return
+      }
       
-    setTimeout(() => {
-        if (newMessage) {
-          console.log('Actualizando mensaje:', newMessage)
-          setCurrentMessage(newMessage)
+      if (data && data.length > 0) {
+        // Filtrar frases que no sean la actual
+        const availablePhrases = data.filter(phrase => 
+          phrase.created_at !== currentMessage.created_at
+        )
+        
+        if (availablePhrases.length > 0) {
+          // Seleccionar una frase aleatoria de las disponibles
+          const randomIndex = Math.floor(Math.random() * availablePhrases.length)
+          const selectedPhrase = availablePhrases[randomIndex]
+          
+          console.log('Frase seleccionada:', selectedPhrase)
+          
+          setTimeout(() => {
+            setCurrentMessage({
+              message: selectedPhrase.content,
+              author: selectedPhrase.author.toUpperCase(),
+              created_at: selectedPhrase.created_at
+            })
+            setIsAnimating(false)
+          }, 400)
+        } else {
+          console.log('No hay frases diferentes disponibles')
+          setIsAnimating(false)
         }
+      } else {
+        console.log('No hay frases en la base de datos')
+        setIsAnimating(false)
+      }
+    } catch (error) {
+      console.error('Error en refreshMessage:', error)
       setIsAnimating(false)
-    }, 400)
     }
   }
 
