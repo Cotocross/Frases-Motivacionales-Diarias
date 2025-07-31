@@ -18,7 +18,7 @@ async function testGeminiConnection() {
   // Test 1: URL v1
   console.log('\n📋 Test 1: URL v1')
   try {
-    const response1 = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${geminiApiKey}`, {
+         const response1 = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-lite:generateContent?key=${geminiApiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -49,7 +49,7 @@ async function testGeminiConnection() {
   // Test 2: URL v1beta
   console.log('\n📋 Test 2: URL v1beta')
   try {
-    const response2 = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${geminiApiKey}`, {
+         const response2 = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${geminiApiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
