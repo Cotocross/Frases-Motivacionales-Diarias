@@ -76,13 +76,16 @@ const ShootingStar = ({ style, delay }: { style: React.CSSProperties; delay: num
 export default function DailyMotivation() {
   // Estado para almacenar la frase actual con su autor y fecha de creación
   const [currentMessage, setCurrentMessage] = useState({ 
-    message: '', // Contenido de la frase
+    message: 'Cargando frase del día...', // Mensaje por defecto mientras carga
     author: '', // Autor de la frase
     created_at: null // Fecha de creación en la base de datos
   })
   
   // Estado para controlar la animación de transición entre frases
   const [isAnimating, setIsAnimating] = useState(false)
+  
+  // Estado para controlar si está cargando
+  const [isLoading, setIsLoading] = useState(true)
 
   // ============================================================================
   // FUNCIÓN: getMessageFromDB - Obtiene una frase específica de la base de datos
@@ -201,6 +204,8 @@ export default function DailyMotivation() {
 
     const initializeMessage = async () => {
       console.log('Inicializando mensaje...')
+      setIsLoading(true) // Iniciar estado de carga
+      
       // Obtener la fecha actual en formato YYYY-MM-DD
       const today = new Date().toISOString().split('T')[0]
       console.log('Fecha actual:', today)
@@ -209,10 +214,42 @@ export default function DailyMotivation() {
       const message = await getMessageFromDB(today)
       console.log('Mensaje inicial:', message)
       
-      // Solo actualizar el estado si el componente sigue montado
+      // Si no hay frase para hoy, buscar la más reciente disponible
+      if (!message) {
+        console.log('No hay frase para hoy, buscando la más reciente...')
+        try {
+          const { data, error } = await supabase
+            .from('phrases')
+            .select('content, author, created_at')
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .single()
+
+          if (error) {
+            console.error('Error obteniendo frase más reciente:', error)
+          } else if (data) {
+            console.log('Frase más reciente encontrada:', data)
+            if (mounted) {
+              setCurrentMessage({
+                message: data.content,
+                author: data.author.toUpperCase(),
+                created_at: data.created_at
+              })
+              setIsLoading(false) // Finalizar carga
+            }
+            return
+          }
+        } catch (error) {
+          console.error('Error buscando frase más reciente:', error)
+        }
+      }
+      
+      // Solo actualizar el estado si el componente sigue montado y hay mensaje
       if (mounted && message) {
         setCurrentMessage(message)
       }
+      
+      setIsLoading(false) // Finalizar carga
     }
 
     initializeMessage()
@@ -384,11 +421,20 @@ export default function DailyMotivation() {
         >
           {/* Frase motivacional con tipografía elegante */}
           <blockquote className="text-golden text-3xl md:text-4xl lg:text-5xl font-playfair font-light leading-relaxed mb-12 px-8">
-            {currentMessage.message}
+            {isLoading ? (
+              <div className="flex items-center justify-center">
+                <RefreshCw className="w-8 h-8 animate-spin mr-4" />
+                <span>Cargando frase del día...</span>
+              </div>
+            ) : (
+              currentMessage.message
+            )}
           </blockquote>
 
           {/* Autor de la frase */}
-          <cite className="text-golden text-sm font-light tracking-[0.4em] uppercase">{currentMessage.author}</cite>
+          {!isLoading && currentMessage.author && (
+            <cite className="text-golden text-sm font-light tracking-[0.4em] uppercase">{currentMessage.author}</cite>
+          )}
         </div>
 
         {/* ============================================================================
@@ -398,10 +444,10 @@ export default function DailyMotivation() {
           <Button
             onClick={refreshMessage}
             className="bg-transparent hover:bg-golden/10 text-golden border border-golden/30 hover:border-golden/50 px-8 py-3 text-sm font-light rounded-none tracking-[0.2em] uppercase transition-all duration-300"
-            disabled={isAnimating} // Deshabilitar durante la animación
+            disabled={isAnimating || isLoading} // Deshabilitar durante la animación o carga
           >
             <RefreshCw className={`w-4 h-4 mr-3 ${isAnimating ? "animate-spin" : ""}`} />
-            Nueva Inspiración
+            {isLoading ? "Cargando..." : "Nueva Inspiración"}
           </Button>
         </div>
 
