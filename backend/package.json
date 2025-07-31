@@ -6,7 +6,8 @@
     "build": "tsc -p scripts/tsconfig.json",
     "generate-phrase": "ts-node scripts/generateDailyPhrase.ts",
     "scheduler": "ts-node scripts/scheduler.ts",
-    "test-generation": "npm run generate-phrase"
+    "test-generation": "npm run generate-phrase",
+    "test-gemini": "ts-node scripts/test-gemini.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "latest",

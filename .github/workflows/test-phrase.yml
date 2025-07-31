@@ -36,6 +36,16 @@ jobs:
         cd backend
         npx ts-node scripts/test-env.ts
 
+    - name: Testear Gemini API
+      env:
+        SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+        SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
+        SUPABASE_SERVICE_ROLE_KEY: ${{ vars.SUPABASE_SERVICE_ROLE_KEY }}
+        GEMINI_API_KEY: ${{ vars.GEMINI_API_KEY }}
+      run: |
+        cd backend
+        pnpm run test-gemini
+
     - name: Generar frase de prueba
       env:
         SUPABASE_URL: ${{ vars.SUPABASE_URL }}
