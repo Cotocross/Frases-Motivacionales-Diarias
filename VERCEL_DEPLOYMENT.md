@@ -26,7 +26,7 @@ npm i -g vercel
 En tu dashboard de Vercel, agrega estas variables:
 
 ```
-NEXT_PUBLIC_SUPABASE_URL=https://pevsldmtldwdjntpgrfs.supabase.co
+NEXT_PUBLIC_SUPABASE_URL=tu_url_de_supabase
 NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_anon_key_aqui
 ```
 
