@@ -2,6 +2,11 @@
 
 Una aplicación web moderna que genera y muestra frases motivacionales diarias usando **Google Gemini AI**, con automatización completa usando GitHub Actions y Supabase.
 
+## 🌐 **Aplicación Desplegada**
+**URL:** [https://frases-motivacionales-diarias-c5c4ss5oq.vercel.app](https://frases-motivacionales-diarias-c5c4ss5oq.vercel.app)
+
+*¡Tu aplicación está online y funcionando!*
+
 ## 🚀 Características
 
 - ✅ **Frontend Moderno**: Next.js 14 con TypeScript y Tailwind CSS
@@ -13,6 +18,7 @@ Una aplicación web moderna que genera y muestra frases motivacionales diarias u
 - ✅ **Automatización Completa**: Generación automática de frases diarias
 - ✅ **Monorepo**: Estructura organizada con pnpm workspaces
 - ✅ **Código Documentado**: Comentarios comprehensivos en todo el código
+- ✅ **Despliegue en Vercel**: Aplicación desplegada y accesible online
 
 ## 📁 Estructura del Proyecto
 
@@ -58,6 +64,7 @@ daily-motivation/
 ### **Infraestructura**
 - **Supabase** - Base de datos PostgreSQL
 - **GitHub Actions** - CI/CD y automatización
+- **Vercel** - Despliegue y hosting
 - **Monorepo** - Gestión de múltiples paquetes
 
 ## 🚀 Instalación y Configuración
@@ -224,6 +231,31 @@ cd backend && pnpm run generate-phrase
 cd backend && pnpm run test-gemini
 ```
 
+### Despliegue en Vercel
+
+```bash
+# Despliegue de producción
+vercel --prod
+
+# Despliegue de preview
+vercel
+
+# Ver logs
+vercel logs
+
+# Listar proyectos
+vercel ls
+```
+
+#### Configuración de Variables en Vercel
+
+Agrega estas variables en tu dashboard de Vercel:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=tu_url_de_supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_clave_anonima
+```
+
 ## 📈 Monitoreo y Logs
 
 ### GitHub Actions
@@ -315,6 +347,7 @@ cd backend && npx ts-node scripts/test-supabase.ts
 - ✅ **Base de datos**: Supabase PostgreSQL
 - ✅ **Frontend elegante**: Next.js con animaciones
 - ✅ **Monorepo**: pnpm workspaces
+- ✅ **Despliegue en Vercel**: Aplicación online y accesible
 - ✅ **Código documentado**: Comentarios comprehensivos
 - ✅ **Tests de conexión**: Verificación de APIs
 - ✅ **Diseño responsivo**: Adaptable a todos los dispositivos

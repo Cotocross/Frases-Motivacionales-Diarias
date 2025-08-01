@@ -5,7 +5,7 @@ import type React from "react"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { RefreshCw, Star, Twitter, Instagram, Github } from "lucide-react"
-import { supabase } from '../../backend/supabase/client'
+import { supabase } from '../lib/supabase'
 
 // ============================================================================
 // COMPONENTE: StarElement - Crea estrellas individuales con diferentes tamaños

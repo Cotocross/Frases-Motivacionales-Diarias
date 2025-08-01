@@ -80,6 +80,17 @@ pnpm build
 pnpm start
 ```
 
+### **Despliegue en Vercel:**
+
+```bash
+# Desde la carpeta frontend
+cd frontend
+vercel --prod
+
+# O desde la raíz con configuración
+vercel --prod
+```
+
 ### **Comandos específicos por workspace:**
 
 ```bash
