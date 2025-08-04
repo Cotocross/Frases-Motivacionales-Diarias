@@ -2,6 +2,8 @@
 
 Una aplicación web moderna que genera y muestra frases motivacionales diarias usando **Google Gemini AI**, con automatización completa usando GitHub Actions y Supabase.
 
+Autor : Alejandro Javier Contreras Olate.
+
 ## 🌐 **Aplicación Desplegada**
 **URL:** [https://frases-motivacionales-diarias-c5c4ss5oq.vercel.app](https://frases-motivacionales-diarias-c5c4ss5oq.vercel.app)
 
