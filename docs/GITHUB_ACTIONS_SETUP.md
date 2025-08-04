@@ -1,6 +1,6 @@
 # 🚀 Configuración de GitHub Actions para Automatización
 
-Este documento explica cómo configurar GitHub Actions para generar frases motivacionales automáticamente.
+Este documento explica cómo configurar GitHub Actions para generar frases motivacionales automáticamente usando **Google Gemini API**.
 
 ## 📋 Ventajas de GitHub Actions
 
@@ -12,23 +12,34 @@ Este documento explica cómo configurar GitHub Actions para generar frases motiv
 
 ## 🔧 Configuración Paso a Paso
 
-### Paso 1: Configurar Secrets en GitHub
+### Paso 1: Configurar Variables en GitHub
 
 1. Ve a tu repositorio en GitHub
 2. Haz clic en **Settings** (Configuración)
 3. En el menú lateral, haz clic en **Secrets and variables** → **Actions**
-4. Haz clic en **New repository secret**
-5. Agrega estos dos secrets:
+4. Haz clic en **Variables** (pestaña)
+5. Haz clic en **New repository variable**
+6. Agrega estas variables:
 
-#### Secret 1: `SUPABASE_URL`
+#### Variable 1: `SUPABASE_URL`
 - **Name**: `SUPABASE_URL`
 - **Value**: Tu URL de Supabase (sin comillas)
 - Ejemplo: `https://tu-proyecto.supabase.co`
 
-#### Secret 2: `SUPABASE_ANON_KEY`
+#### Variable 2: `SUPABASE_ANON_KEY`
 - **Name**: `SUPABASE_ANON_KEY`
 - **Value**: Tu clave anónima de Supabase (sin comillas)
 - Ejemplo: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`
+
+#### Variable 3: `SUPABASE_SERVICE_ROLE_KEY`
+- **Name**: `SUPABASE_SERVICE_ROLE_KEY`
+- **Value**: Tu clave de servicio de Supabase (sin comillas)
+- Ejemplo: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`
+
+#### Variable 4: `GEMINI_API_KEY`
+- **Name**: `GEMINI_API_KEY`
+- **Value**: Tu API key de Google Gemini (sin comillas)
+- Ejemplo: `AIzaSyC...`
 
 ### Paso 2: Verificar Workflows
 
@@ -102,9 +113,10 @@ on:
 
 ## 🚨 Troubleshooting
 
-### Error: "Secrets not found"
-- Verifica que los secrets estén configurados correctamente
-- Asegúrate de que los nombres sean exactos: `SUPABASE_URL` y `SUPABASE_ANON_KEY`
+### Error: "Variables not found"
+- Verifica que las variables estén configuradas correctamente
+- Asegúrate de que los nombres sean exactos: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, y `GEMINI_API_KEY`
+- **Importante**: Usa la pestaña **Variables** (no Secrets) en GitHub Actions
 
 ### Error: "pnpm not found"
 - El workflow ya incluye la instalación de pnpm
@@ -113,6 +125,8 @@ on:
 ### Error: "Connection failed"
 - Verifica que las credenciales de Supabase sean correctas
 - Asegúrate de que el proyecto de Supabase esté activo
+- Verifica que la API key de Google Gemini sea válida
+- Comprueba que tengas saldo disponible en Google AI Studio
 
 ### Workflow no se ejecuta automáticamente
 - GitHub Actions tiene un retraso de hasta 5 minutos
@@ -147,11 +161,12 @@ on:
 
 ## 🔒 Seguridad
 
-### Secrets seguros:
-- Los secrets están encriptados
+### Variables seguras:
+- Las variables están encriptadas
 - Solo son visibles durante la ejecución
 - No se almacenan en logs
 - Se pueden rotar fácilmente
+- **Nota**: Las variables son visibles en los logs, por eso usamos Variables en lugar de Secrets
 
 ### Permisos:
 - Los workflows solo tienen acceso a tu código
@@ -164,19 +179,21 @@ Una vez que GitHub Actions esté funcionando:
 
 1. **Configurar notificaciones** (email, Slack, Discord)
 2. **Agregar más workflows** (backup, limpieza)
-3. **Integrar con IA real** (OpenAI, Claude)
+3. **Optimizar prompts** de Google Gemini para mejores frases
 4. **Crear dashboard** de monitoreo
 5. **Implementar rollback** automático
+6. **Agregar categorización** de frases por tema
 
 ## 📞 Soporte
 
 Si tienes problemas:
 
 1. Revisa los logs en GitHub Actions
-2. Verifica la configuración de secrets
+2. Verifica la configuración de variables
 3. Prueba el workflow manualmente
 4. Consulta la documentación de GitHub Actions
+5. Verifica la conectividad con Google Gemini API
 
 ---
 
-**¡Tu sistema de frases motivacionales automáticas con GitHub Actions está listo! 🚀** 
+**¡Tu sistema de frases motivacionales automáticas con GitHub Actions y Google Gemini está listo! 🚀🤖** 
