@@ -3,7 +3,7 @@
 Guía completa para desplegar la aplicación Daily Motivation en Vercel.
 
 ## 🌐 **Aplicación Desplegada**
-**URL:** [https://frases-motivacionales-diarias-c5c4ss5oq.vercel.app](https://frases-motivacionales-diarias-c5c4ss5oq.vercel.app)
+**URL:** [https://frases-motivacionales-diarias.vercel.app](https://frases-motivacionales-diarias.vercel.app)
 
 *¡Aplicación desplegada exitosamente en Vercel!*
 
