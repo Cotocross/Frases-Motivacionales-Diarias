@@ -21,7 +21,7 @@ La aplicación combina la creatividad de la IA con el diseño web moderno para c
 
 ## 🚀 **Demo en vivo**
 
-**🌐 [https://frases-motivacionales-diarias-c5c4ss5oq.vercel.app](https://frases-motivacionales-diarias-c5c4ss5oq.vercel.app)**
+**🌐 [https://frases-motivacionales-diarias.vercel.app](https://frases-motivacionales-diarias.vercel.app)**
 
 ## ✨ **Características principales**
 
