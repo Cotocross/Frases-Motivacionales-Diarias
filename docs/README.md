@@ -14,9 +14,9 @@ Esta documentación proporciona detalles técnicos profundos sobre la implementa
 - **[VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md)** - Guía completa de despliegue en Vercel
 
 ## 🌐 **Aplicación Desplegada**
-**URL:** [https://frases-motivacionales-diarias-c5c4ss5oq.vercel.app](https://frases-motivacionales-diarias-c5c4ss5oq.vercel.app)
+**URL:** [https://frases-motivacionales-diarias.vercel.app](https://frases-motivacionales-diarias.vercel.app)
 
-*¡Tu aplicación está online y funcionando!*
+*¡La aplicación está online y funcionando!*
 
 ## 🚀 Características
 
