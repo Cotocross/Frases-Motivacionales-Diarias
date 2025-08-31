@@ -23,6 +23,9 @@ La aplicación combina la creatividad de la IA con el diseño web moderno para c
 
 **🌐 [https://frases-motivacionales-diarias.vercel.app](https://frases-motivacionales-diarias.vercel.app)**
 
+![Ejemplo Frase 1](https://i.imgur.com/Ie6NBZ6.png)
+![Ejemplo Frase 2](https://i.imgur.com/GcH78Pj.png)
+
 ## ✨ **Características principales**
 
 - 🤖 **Generación automática** de frases con IA (Google Gemini)
@@ -81,7 +84,7 @@ daily-motivation/
 
 ```bash
 # Clonar el repositorio
-git clone <tu-repositorio>
+git clone https://github.com/Cotocross/Frases-Motivacionales-Diarias.git
 cd daily-motivation
 
 # Instalar dependencias
